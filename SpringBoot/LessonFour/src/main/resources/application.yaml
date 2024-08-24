@@ -1,0 +1,9 @@
+#background-executor:
+#  enable: false
+#  default-executor: cron
+#  tasks-size: 1
+#  time:
+#    in-seconds-time: 1
+#  cron:
+#    expression: "*/3 * * * * *"
+#logging.level.root: DEBUG
