@@ -10,7 +10,7 @@ public class Order
 {
     private Long id;
     private String product;
-    private BigDecimal price;
+    private BigDecimal cost;
     private Client client;
     private Instant createdAt;
     private Instant updatedAt;
