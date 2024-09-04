@@ -1,14 +1,13 @@
-package com.example.REST_controllers.repository;
+package com.example.REST_controllers.service;
 
 import com.example.REST_controllers.model.Order;
 
 import java.util.List;
-import java.util.Optional;
 
-public interface OrderRepository
+public interface OrderService
 {
-    List<Order> findAll();
-    Optional<Order> findById(Long id);
+    List<Order> getAllOrders();
+    Order findById(Long id);
     Order save(Order order);
     Order update(Order order);
     void deleteById(Long id);
