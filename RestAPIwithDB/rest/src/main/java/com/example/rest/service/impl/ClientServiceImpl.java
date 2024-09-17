@@ -35,7 +35,7 @@ public class ClientServiceImpl implements ClientService
 
     @Override
     public Client update(Client client) {
-        return clientRepository.save(client);
+        return clientRepository.update(client);
     }
 
     @Override

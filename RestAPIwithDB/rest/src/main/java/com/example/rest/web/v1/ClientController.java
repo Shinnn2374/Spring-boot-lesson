@@ -46,7 +46,7 @@ public class ClientController
         Client updatedClient = clientService.update(clientMapper.requestToClient(clientId, request));
         return ResponseEntity.ok(clientMapper.clientToResponse(updatedClient));
     }
-    
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteById(@PathVariable Long id)
     {
