@@ -5,6 +5,7 @@ import com.example.rest.model.Client;
 import com.example.rest.model.Order;
 import com.example.rest.repositoryes.ClientRepository;
 import com.example.rest.repositoryes.OrderRepository;
+import com.example.rest.utils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -57,16 +58,29 @@ public class InMemoryOrderRepository implements OrderRepository
 
     @Override
     public Order update(Order order) {
-        return null;
+        Long orderId = order.getId();
+        Instant now = Instant.now();
+        Order currentOrder = repository.get(orderId);
+        if (currentOrder == null)
+        {
+            throw new EntityNotFoundException(MessageFormat.format("Order {0} not found", orderId));
+        }
+        BeanUtils.copyNonNullProperties(order,currentOrder);
+        currentOrder.setUpdateAt(now);
+        currentOrder.setUpdateAt(now);
+        repository.put(orderId, currentOrder);
+        return currentOrder;
     }
 
     @Override
     public void deleteById(Long orderId) {
-
+        repository.remove(orderId);
     }
 
     @Override
     public void deleteByIdIn(List<Long> orderIds) {
-
+        orderIds.forEach(orderId -> {
+            repository.remove(orderId);
+        });
     }
 }

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import java.text.MessageFormat;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
@@ -18,7 +19,7 @@ import java.util.stream.Collectors;
 public class InMemoryClientRepository implements ClientRepository
 {
     private OrderRepository orderRepository;
-    private final Map<Long, Client> repository = new HashMap<>();
+    private final Map<Long, Client> repository = new ConcurrentHashMap<>();
     private final AtomicLong currentId = new AtomicLong(1);
 
     @Autowired
