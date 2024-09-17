@@ -36,7 +36,7 @@ public class ClientMapper
         response.setOrders(orderMapper.orderListToResponseList(client.getOrders()));
         return response;
     }
-    public ClientListResponse clientListToClientResponse(List<Client> clients)
+    public ClientListResponse clientListToClientResponseList(List<Client> clients)
     {
         ClientListResponse response = new ClientListResponse();
         response.setClients(clients.stream().map(this::clientToResponse).collect(Collectors.toList()));
