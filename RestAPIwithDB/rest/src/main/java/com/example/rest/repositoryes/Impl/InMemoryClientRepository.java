@@ -67,7 +67,7 @@ public class InMemoryClientRepository implements ClientRepository
         {
             throw new EntityNotFoundException(MessageFormat.format("Client with id {0} not found", clientId));
         }
-        orderRepository.deleteByIdIn(client.getOrders().stream().map(Order::getId).collect(Collectors.toList()));
+//        orderRepository.deleteByIdIn(client.getOrders().stream().map(Order::getId).collect(Collectors.toList()));
         repository.remove(clientId);
     }
 }
