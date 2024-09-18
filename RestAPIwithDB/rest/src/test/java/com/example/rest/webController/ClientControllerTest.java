@@ -2,6 +2,7 @@ package com.example.rest.webController;
 
 import com.example.rest.AbstractTestController;
 import com.example.rest.StringTestUtils;
+import com.example.rest.exception.EntityNotFoundException;
 import com.example.rest.mapper.v1.ClientMapper;
 import com.example.rest.model.Client;
 import com.example.rest.model.Order;
@@ -19,6 +20,7 @@ import org.springframework.http.MediaType;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -134,4 +136,24 @@ public class ClientControllerTest extends AbstractTestController
                 .andExpect(status().isNoContent());
         Mockito.verify(clientService, Mockito.times(1)).deleteById(1L);
     }
+
+//    @Test
+//    public void whenGetNotExistClient_thenReturnError() throws Exception
+//    {
+//        Mockito.when(clientService.findById(500L)).thenThrow(new EntityNotFoundException("client with id 500 not found"));
+//
+//        var response = mockMvc.perform(get("/api/v1/client/500"))
+//                .andExpect(status().isNotFound())
+//                .andReturn()
+//                .getResponse()
+//                .getContentAsString();
+//
+//        response.setCharacterEncoding("UTF-8");
+//
+//        String actualResponse = response.getContentAsString();
+//        String expextedResponse = StringTestUtils.readStringFromResource("response/client_by_id_not_found_response.json");
+//
+//        Mockito.verify(clientService, Mockito.times(1)).findById(500L);
+//        JsonAssert.assertJsonEquals(expextedResponse, actualResponse);
+//    }
 }

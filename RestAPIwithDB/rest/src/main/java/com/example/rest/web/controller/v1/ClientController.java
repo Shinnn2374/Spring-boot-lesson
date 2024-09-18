@@ -1,5 +1,6 @@
-package com.example.rest.web.v1;
+package com.example.rest.web.controller.v1;
 
+import com.example.rest.exception.EntityNotFoundException;
 import com.example.rest.mapper.v1.ClientMapper;
 import com.example.rest.model.Client;
 import com.example.rest.service.ClientService;
@@ -9,6 +10,7 @@ import com.example.rest.web.model.UpsertClientRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
