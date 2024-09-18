@@ -79,8 +79,6 @@ public class InMemoryOrderRepository implements OrderRepository
 
     @Override
     public void deleteByIdIn(List<Long> orderIds) {
-        orderIds.forEach(orderId -> {
-            repository.remove(orderId);
-        });
+        orderIds.forEach(orderId -> repository.remove(orderId));
     }
 }

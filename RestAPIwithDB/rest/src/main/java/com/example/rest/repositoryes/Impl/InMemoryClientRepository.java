@@ -48,7 +48,7 @@ public class InMemoryClientRepository implements ClientRepository
 
     @Override
     public Client update(Client client) {
-        Long clientId = currentId.getAndIncrement() ;
+        Long clientId = client.getId();
         Client currentClient = repository.get(clientId);
         if (currentClient == null)
         {
