@@ -16,17 +16,17 @@ import java.util.ArrayList;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public abstract AbstractTestController
+public abstract class AbstractTestController
 {
     @Autowired
-    protected final MockMvc mockMvc;
+    protected  MockMvc mockMvc;
 
     @Autowired
     protected ObjectMapper objectMapper;
 
     protected Client createClient(Long id, Order order){
         Client client = new Client(
-                id
+                id,
                 "Client " + id,
                 new ArrayList<>()
         );
@@ -56,6 +56,6 @@ public abstract AbstractTestController
     }
 
     protected OrderResponse createOrderResponse(Long id, Long cost){
-        return new OrderResponse();
+        return new OrderResponse(id, "Test product " + id, new BigDecimal(cost));
     }
 }
