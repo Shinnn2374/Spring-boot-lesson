@@ -32,6 +32,7 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 	testImplementation("net.javacrumbs.json-unit:json-unit:2.38.0")
+	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.4")
 }
 
 tasks.withType<Test> {
