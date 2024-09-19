@@ -1,16 +1,20 @@
 package com.example.rest.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.persistence.Entity;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Data
+@Getter
+@Schema
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
+@Entity(name = "clients")
 public class Client
 {
     private Long id;
