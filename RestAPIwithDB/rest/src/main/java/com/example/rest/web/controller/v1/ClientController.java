@@ -1,6 +1,5 @@
 package com.example.rest.web.controller.v1;
 
-import com.example.rest.exception.EntityNotFoundException;
 import com.example.rest.mapper.v1.ClientMapper;
 import com.example.rest.model.Client;
 import com.example.rest.service.ClientService;
@@ -25,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "Client V1", description = "Client controller version 1.0")
 public class ClientController
 {
-    private final ClientService clientService;
+    private final ClientService clientServiceImpl;
     private final ClientMapper clientMapper;
 
     @Operation(
@@ -51,27 +50,27 @@ public class ClientController
     public ResponseEntity<ClientListResponse> findAll()
     {
         return ResponseEntity.ok(
-                clientMapper.clientListToClientResponseList(clientService.findAll())
+                clientMapper.clientListToClientResponseList(clientServiceImpl.findAll())
         );
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ClientResponse> findById(@PathVariable Long id)
     {
-        return ResponseEntity.ok(clientMapper.clientToResponse(clientService.findById(id)));
+        return ResponseEntity.ok(clientMapper.clientToResponse(clientServiceImpl.findById(id)));
     }
 
     @PostMapping
     public ResponseEntity<ClientResponse> create(@RequestBody UpsertClientRequest request)
     {
-        Client newClient = clientService.save(clientMapper.requestToClient(request));
+        Client newClient = clientServiceImpl.save(clientMapper.requestToClient(request));
         return ResponseEntity.status(HttpStatus.CREATED).body(clientMapper.clientToResponse(newClient));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<ClientResponse> update(@PathVariable("id") Long clientId, @RequestBody UpsertClientRequest request)
     {
-        Client updatedClient = clientService.update(clientMapper.requestToClient(clientId, request));
+        Client updatedClient = clientServiceImpl.update(clientMapper.requestToClient(clientId, request));
         return ResponseEntity.ok(clientMapper.clientToResponse(updatedClient));
     }
 
@@ -83,7 +82,7 @@ public class ClientController
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id)
     {
-        clientService.deleteById(id);
+        clientServiceImpl.deleteById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

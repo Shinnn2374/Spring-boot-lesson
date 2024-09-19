@@ -33,6 +33,8 @@ dependencies {
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 	testImplementation("net.javacrumbs.json-unit:json-unit:2.38.0")
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.4")
+	implementation("org.mapstruct:mapstruct:1.5.3.Final")
+	annotationProcessor("org.mapstruct:mapstruct-processor:1.5.3.Final")
 }
 
 tasks.withType<Test> {

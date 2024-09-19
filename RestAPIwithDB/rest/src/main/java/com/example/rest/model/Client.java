@@ -1,7 +1,7 @@
 package com.example.rest.model;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Getter
+@Setter
 @Schema
 @Builder
 @AllArgsConstructor
@@ -17,14 +18,23 @@ import java.util.stream.Collectors;
 @Entity(name = "clients")
 public class Client
 {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "client_name")
     private String name;
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ToString.Exclude
     private List<Order> orders = new ArrayList<>();
+
+
 
     public void addOrder(Order order)
     {
+        if (orders == null){orders = new ArrayList<>();}
         orders.add(order);
     }
+
     public void removeOrder(Long orderId)
     {
         orders = orders.stream().filter(o -> o.getId().equals(orderId)).collect(Collectors.toList());

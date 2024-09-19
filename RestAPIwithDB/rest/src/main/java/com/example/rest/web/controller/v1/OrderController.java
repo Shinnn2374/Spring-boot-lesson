@@ -16,39 +16,39 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class OrderController
 {
-    private final OrderService orderService;
+    private final OrderService orderServiceImpl;
     private final OrderMapper orderMapper;
 
     @GetMapping
     public ResponseEntity<OrderListResponse> findAll()
     {
-        return ResponseEntity.ok(orderMapper.orderListToOrderListResponse(orderService.findAll()));
+        return ResponseEntity.ok(orderMapper.orderListToOrderListResponse(orderServiceImpl.findAll()));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<OrderResponse> findById(@PathVariable Long id)
     {
-        return ResponseEntity.ok(orderMapper.orderToResponse(orderService.findById(id)));
+        return ResponseEntity.ok(orderMapper.orderToResponse(orderServiceImpl.findById(id)));
     }
 
     @PostMapping
     public ResponseEntity<OrderResponse> create(@RequestBody UpsertOrderRequest request)
     {
-        Order newOrder = orderService.save(orderMapper.requestToOrder(request));
+        Order newOrder = orderServiceImpl.save(orderMapper.requestToOrder(request));
         return ResponseEntity.ok(orderMapper.orderToResponse(newOrder));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<OrderResponse> update(@PathVariable("id") Long orderId, @RequestBody UpsertOrderRequest request)
     {
-        Order updatedOrder = orderService.update(orderMapper.requestToOrder(orderId, request));
+        Order updatedOrder = orderServiceImpl.update(orderMapper.requestToOrder(orderId, request));
         return ResponseEntity.ok(orderMapper.orderToResponse(updatedOrder));
     }
 
     @DeleteMapping("/id")
     public ResponseEntity<Void> deleteById(@PathVariable Long id)
     {
-        orderService.deleteById(id);
+        orderServiceImpl.deleteById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
