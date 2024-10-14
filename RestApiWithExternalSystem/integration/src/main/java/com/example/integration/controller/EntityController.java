@@ -7,8 +7,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/entity")
@@ -29,12 +31,25 @@ public class EntityController
     @GetMapping("/{name}")
     public ResponseEntity<EntityModel> entityByName(@PathVariable String name)
     {
-        return ResponseEntity.ok(new EntityModel().createMockModel(name));
+        return ResponseEntity.ok(EntityModel.createMockModel(name));
     }
 
     @PostMapping
     public ResponseEntity<EntityModel> createEntity(@RequestBody UpsertEntityRequest request)
     {
-        return ResponseEntity.status(HttpStatus.CREATED).body(new EntityModel().createMockModel(request.getName()));
+        return ResponseEntity.status(HttpStatus.CREATED).body(EntityModel.createMockModel(request.getName()));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<EntityModel> updateEntity(@PathVariable UUID id, @RequestBody UpsertEntityRequest request)
+    {
+        return ResponseEntity.ok(new EntityModel(id, request.getName(), Instant.now()));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<EntityModel> deleteEntityById(@PathVariable UUID id)
+    {
+        log.info("Deleting entity with id {}", id);
+        return ResponseEntity.noContent().build();
     }
 }

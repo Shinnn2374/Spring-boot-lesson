@@ -16,7 +16,7 @@ public class EntityModel
     private String name;
     private Instant date;
 
-    public EntityModel createMockModel(String name)
+    public static EntityModel createMockModel(String name)
     {
         return new EntityModel(UUID.randomUUID(), name, Instant.now());
     }
