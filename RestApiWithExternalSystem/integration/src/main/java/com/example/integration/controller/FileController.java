@@ -3,7 +3,10 @@ package com.example.integration.controller;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.Response;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,8 +31,18 @@ public class FileController
         return ResponseEntity.ok("File upload is successful");
     }
 
-    @GetMapping
+    @GetMapping("/download/{fileName}")
     public ResponseEntity<Resource> downLoad(@PathVariable String fileName)
     {
+        String filePath = "files/" + fileName;
+        Resource resource = new ClassPathResource(filePath);
+        if (!resource.exists())
+        {
+            return ResponseEntity.notFound().build();
+        }
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName);
+        headers.setContentType(MediaType.TEXT_PLAIN);
+        return ResponseEntity.ok().headers(headers).body(resource);
     }
 }
