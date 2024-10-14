@@ -32,7 +32,7 @@ public class FileController
     }
 
     @GetMapping("/download/{fileName}")
-    public ResponseEntity<Resource> downLoad(@PathVariable String fileName)
+    public ResponseEntity<Resource> downLoadFile(@PathVariable String fileName)
     {
         String filePath = "files/" + fileName;
         Resource resource = new ClassPathResource(filePath);
