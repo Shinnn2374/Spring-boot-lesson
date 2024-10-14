@@ -31,6 +31,5 @@ public class FileController
     @GetMapping
     public ResponseEntity<Resource> downLoad(@PathVariable String fileName)
     {
-
     }
 }
