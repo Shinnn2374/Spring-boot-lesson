@@ -10,6 +10,6 @@ public class ClientConfiguration
     @Bean
     public OkHttpClient okHttpClient()
     {
-
+        return new OkHttpClient();
     }
 }
