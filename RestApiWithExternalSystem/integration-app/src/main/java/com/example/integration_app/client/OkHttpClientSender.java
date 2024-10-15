@@ -34,7 +34,7 @@ public class OkHttpClientSender
     private String baseUrl;
 
     @SneakyThrows
-    public String loadFile(MultipartFile file)
+    public String uploadFile(MultipartFile file)
     {
         MultipartBody.Builder builder = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
