@@ -1,5 +1,6 @@
 package com.example.integration_app.configuration;
 
+import okhttp3.OkHttpClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

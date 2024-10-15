@@ -32,7 +32,7 @@ dependencies {
 	annotationProcessor("org.projectlombok:lombok")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-	implementation("com.squareup.okhhtp3:okhttp:3.14.6")
+	implementation("com.squareup.okhttp3:okhttp:3.14.6")
 }
 
 dependencyManagement {
