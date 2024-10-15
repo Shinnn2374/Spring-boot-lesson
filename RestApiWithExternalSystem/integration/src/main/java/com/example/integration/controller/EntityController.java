@@ -1,11 +1,9 @@
 package com.example.integration.controller;
-
-import com.example.integration.model.EntityModel;
-import com.example.integration.model.UpsertEntityRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.example.integration.model.EntityModel;
 
 import java.time.Instant;
 import java.util.ArrayList;

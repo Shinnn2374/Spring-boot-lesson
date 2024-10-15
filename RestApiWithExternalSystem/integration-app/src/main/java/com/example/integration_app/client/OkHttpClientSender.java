@@ -4,7 +4,6 @@ import com.example.integration_app.model.EntityModel;
 import com.example.integration_app.model.UpsertEntityRequest;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -12,12 +11,10 @@ import okhttp3.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
-import org.springframework.http.client.MultipartBodyBuilder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.net.http.HttpClient;
 import java.util.List;
 import java.util.UUID;
 
@@ -30,7 +27,7 @@ public class OkHttpClientSender
 
     private final ObjectMapper objectMapper;
 
-    @Value("${app.integration.base-url}")
+    @Value("${app.integration}")
     private String baseUrl;
 
     @SneakyThrows
