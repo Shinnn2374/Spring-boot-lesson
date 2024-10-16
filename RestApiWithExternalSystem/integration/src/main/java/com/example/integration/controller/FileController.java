@@ -18,7 +18,7 @@ import java.nio.charset.StandardCharsets;
 @Slf4j
 public class FileController
 {
-    @PostMapping
+    @PostMapping("/upload")
     @SneakyThrows
     public ResponseEntity<String> uploadFile(@RequestPart MultipartFile file)
     {
