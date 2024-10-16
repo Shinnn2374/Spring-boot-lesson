@@ -57,7 +57,7 @@ public class OkHttpClientSender
     public Resource downloadFile(String fileName)
     {
        Request request = new Request.Builder()
-               .url(baseUrl + "api/v1/file/download/" + fileName)
+               .url(baseUrl + "/api/v1/file/download/" + fileName)
                .header("Accept", "application/octet-stream")
                .get()
                .build();
@@ -86,7 +86,7 @@ public class OkHttpClientSender
     public EntityModel getEntityByName(String name)
     {
         Request request = new Request.Builder()
-                .url(baseUrl + "api/v1/entity/" + name)
+                .url(baseUrl + "/api/v1/entity/" + name)
                 .build();
         return processResponse(request, new TypeReference<>(){});
     }

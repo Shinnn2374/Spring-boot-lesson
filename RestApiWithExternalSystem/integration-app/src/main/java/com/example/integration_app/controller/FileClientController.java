@@ -29,7 +29,7 @@ public class FileClientController
     {
         Resource resource = client.downloadFile(fileName);
         HttpHeaders headers = new HttpHeaders();
-        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + resource.getFilename());
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + resource.getFilename());
         headers.setContentType(MediaType.TEXT_PLAIN);
         return ResponseEntity.ok()
                 .headers(headers)
