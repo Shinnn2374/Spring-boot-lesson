@@ -1,6 +1,7 @@
 package com.example.integration_app.clients;
 
 import com.example.integration_app.model.EntityModel;
+import com.example.integration_app.model.UpsertEntityRequest;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -88,6 +89,20 @@ public class OkHttpClientSender
                 .url(baseUrl + "api/v1/entity/" + name)
                 .build();
         return processResponse(request, new TypeReference<>(){});
+    }
+
+    @SneakyThrows
+    public EntityModel createEntity(UpsertEntityRequest request)
+    {
+        MediaType JSON = MediaType.parse("application/json;charset=utf-8");
+        String requestBody = objectMapper.writeValueAsString(request);
+        RequestBody body = RequestBody.create(requestBody, JSON);
+        Request httpRequest = new Request.Builder()
+                .url(baseUrl + "/api/v1/entity")
+                .post(body)
+                .build();
+        return processResponse(httpRequest, new TypeReference<>(){});
+
     }
 
 
