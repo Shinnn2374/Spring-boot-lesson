@@ -65,7 +65,7 @@ public class OkHttpClientSender
        {
           if (!response.isSuccessful())
           {
-              log.error("Error trying download file");
+              log.error("Error to trying download file");
               return null;
           }
           return new ByteArrayResource(response.body().bytes());
