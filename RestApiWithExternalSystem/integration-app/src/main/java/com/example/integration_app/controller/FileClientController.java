@@ -1,9 +1,7 @@
 package com.example.integration_app.controller;
 
 import com.example.integration_app.clients.OkHttpClientSender;
-import com.example.integration_app.model.EntityModel;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -29,7 +27,7 @@ public class FileClientController
     {
         Resource resource = client.downloadFile(fileName);
         HttpHeaders headers = new HttpHeaders();
-        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + resource.getFilename());
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + resource.getFilename());
         headers.setContentType(MediaType.TEXT_PLAIN);
         return ResponseEntity.ok()
                 .headers(headers)
