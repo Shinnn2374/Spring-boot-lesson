@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -43,6 +44,12 @@ public class EntityController
     @PutMapping("/{id}")
     public ResponseEntity<EntityModel> updateEntity(@PathVariable UUID id, @RequestBody UpsertEntityRequest request)
     {
-        
+        return ResponseEntity.ok(new EntityModel(id, request.getName(), Instant.now()));
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteEntityById(@PathVariable UUID id)
+    {
+        log.info("Deleting entity with id {}", id);
+        return ResponseEntity.noContent().build();
     }
 }
