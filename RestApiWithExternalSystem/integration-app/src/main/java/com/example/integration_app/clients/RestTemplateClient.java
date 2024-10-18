@@ -1,6 +1,7 @@
 package com.example.integration_app.clients;
 
 import com.example.integration_app.model.EntityModel;
+import com.example.integration_app.model.UpsertEntityRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
@@ -14,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
@@ -55,9 +57,55 @@ public class RestTemplateClient
                 baseUrl+"/api/v1/entity",
                 HttpMethod.GET,
                 null,
-                new ParameterizedTypeReference<List<EntityModel>>() {
-                    
+                new ParameterizedTypeReference<>() {
                 }
-        )
+        );
+        return response.getBody();
+    }
+
+    public EntityModel getEntityByName(String name)
+    {
+        ResponseEntity<EntityModel> response = restTemplate.exchange(
+                baseUrl +"/api/v1/entity/" + name,
+                HttpMethod.GET,
+                null,
+                EntityModel.class,
+                name
+        );
+        return response.getBody();
+    }
+    public EntityModel createEntity(UpsertEntityRequest request)
+    {
+        HttpEntity<UpsertEntityRequest> requestEntity = new HttpEntity<>(request);
+        ResponseEntity<EntityModel> response = restTemplate.exchange(
+                baseUrl + "/api/v1/entity",
+                HttpMethod.POST,
+                requestEntity,
+                EntityModel.class
+        );
+        return response.getBody();
+    }
+
+    public EntityModel updateEntity(UUID id, UpsertEntityRequest request)
+    {
+        HttpEntity<UpsertEntityRequest> requestEntity = new HttpEntity<>(request);
+        ResponseEntity<EntityModel> response = restTemplate.exchange(
+                baseUrl + "/api/v1/entity/" + id,
+                HttpMethod.PUT,
+                requestEntity,
+                EntityModel.class,
+                id
+                );
+        return response.getBody();
+    }
+    public void deleteEntityById(UUID id)
+    {
+        restTemplate.exchange(
+                baseUrl + "/api/v1/entity/{id}",
+                HttpMethod.DELETE,
+                null,
+                Void.class,
+                id
+        );
     }
 }
