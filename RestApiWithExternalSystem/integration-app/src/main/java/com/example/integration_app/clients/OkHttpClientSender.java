@@ -69,7 +69,8 @@ public class OkHttpClientSender
               return null;
           }
           return new ByteArrayResource(response.body().bytes());
-       }catch (IOException e)
+       }
+       catch (IOException e)
        {
            e.printStackTrace();
            return null;
