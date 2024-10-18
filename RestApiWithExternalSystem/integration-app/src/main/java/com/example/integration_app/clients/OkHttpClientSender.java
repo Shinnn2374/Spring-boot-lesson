@@ -1,4 +1,4 @@
-package com.example.integration_app.service.clients;
+package com.example.integration_app.clients;
 
 import com.example.integration_app.model.EntityModel;
 import com.example.integration_app.model.UpsertEntityRequest;
@@ -29,7 +29,7 @@ public class OkHttpClientSender
     private String baseUrl;
 
     @SneakyThrows
-    public String loadFile(MultipartFile file)
+    public String uploadFile(MultipartFile file)
     {
         MultipartBody.Builder builder = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
