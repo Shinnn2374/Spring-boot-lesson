@@ -23,8 +23,8 @@ import java.util.UUID;
 @Slf4j
 public class OkhttpClientSender
 {
-    private OkHttpClient client;
-    private ObjectMapper objectMapper;
+    private final OkHttpClient client;
+    private final ObjectMapper objectMapper;
     @Value("${app.integration.base-url}")
     private String baseUrl;
 
@@ -37,7 +37,7 @@ public class OkhttpClientSender
                         RequestBody.create(MediaType.parse("application/octet-stream"), file.getBytes()));
         Request request = new Request.Builder()
                 .url(baseUrl + "/api/v1/file/upload")
-                .header("Content-Type", "multipart/from-data")
+                .header("Content-Type", "multipart/form-data")
                 .post(builder.build())
                 .build();
         try(Response response = client.newCall(request).execute())
@@ -54,7 +54,7 @@ public class OkhttpClientSender
     public Resource downLoadFile(String fileName)
     {
         Request request = new Request.Builder()
-                .url(baseUrl + "api/v1/file/download/" + fileName)
+                .url(baseUrl + "/api/v1/file/download/" + fileName)
                 .header("Accept", "application/octet-stream")
                 .get()
                 .build();
@@ -134,7 +134,7 @@ public class OkhttpClientSender
         RequestBody body = RequestBody.create(requestBody, JSON);
 
         Request httpRequest = new Request.Builder()
-                .url(baseUrl + "/api/v1/entity")
+                .url(baseUrl + "/api/v1/entity/" + id)
                 .put(body)
                 .build();
         return processResponse(httpRequest, new TypeReference<>() {});
