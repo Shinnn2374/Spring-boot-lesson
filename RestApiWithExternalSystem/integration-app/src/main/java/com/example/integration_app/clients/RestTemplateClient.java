@@ -92,7 +92,8 @@ public class RestTemplateClient
                 baseUrl + "/api/v1/entity/{id}",
                 HttpMethod.PUT,
                 requestEntity,
-                EntityModel.class
+                EntityModel.class,
+                id
         );
         return response.getBody();
     }
@@ -102,7 +103,9 @@ public class RestTemplateClient
         ResponseEntity<Void> response = restTemplate.exchange(
                 baseUrl + "/api/v1/entity/{id}",
                 HttpMethod.DELETE,
-                
-        )
+                null,
+                Void.class,
+                id
+        );
     }
 }
