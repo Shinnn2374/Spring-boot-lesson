@@ -1,5 +1,7 @@
 package com.example.integration_app.clients;
 
+import com.example.integration_app.model.EntityModel;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -24,7 +27,7 @@ public class OkhttpClientSender
     private String baseUrl;
 
     @SneakyThrows
-    public String loadFile(MultipartFile file)
+    public String uploadFile(MultipartFile file)
     {
         MultipartBody.Builder builder = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
@@ -69,4 +72,16 @@ public class OkhttpClientSender
             return null;
         }
     }
+
+    public List<EntityModel> getEntityList()
+    {
+        Request request = new Request.Builder()
+                .url(baseUrl + "/api/v1/entity")
+                .build();
+
+        return processResponse(request, new TypeReference<>(){});
+    }
+
+    @SneakyThrows
+    public
 }
