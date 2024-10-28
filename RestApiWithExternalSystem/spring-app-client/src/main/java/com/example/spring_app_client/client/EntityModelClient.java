@@ -26,7 +26,7 @@ public interface EntityModelClient
     Mono<EntityModel> updateModel(@RequestBody EntityModel model, @PathVariable Long id);
 
     @DeleteExchange("/{id}")
-    Mono<Void> deleteModel(@PathVariable Long id);
+    Mono<ResponseEntity<Void>> deleteModel(@PathVariable Long id);
 
     @GetExchange("/exception")
     Mono<ResponseEntity<Void>> exceptionMethod();

@@ -28,9 +28,10 @@ public class AppConfiguration
     public EntityModelClient entityModelClient(WebClient webClient)
     {
         HttpServiceProxyFactory httpServiceProxyFactory =
-                HttpServiceProxyFactory
-                        .builder(WebClientAdapter.forClient(webClient))
+                HttpServiceProxyFactory.builder(WebClientAdapter.forClient(webClient))
                         .build();
         return httpServiceProxyFactory.createClient(EntityModelClient.class);
     }
+
+
 }
