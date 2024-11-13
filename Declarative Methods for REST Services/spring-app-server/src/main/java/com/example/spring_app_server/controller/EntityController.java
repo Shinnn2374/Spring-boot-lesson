@@ -2,11 +2,9 @@ package com.example.spring_app_server.controller;
 
 import com.example.spring_app_server.model.EntityModel;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +37,8 @@ public class EntityController
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<EntityModel> getById(@PathVariable Long id) {
+    public ResponseEntity<EntityModel> getById(@PathVariable Long id)
+    {
         return ResponseEntity.ok(
                 EntityModel.builder()
                         .id(ThreadLocalRandom.current().nextLong())
@@ -47,5 +46,32 @@ public class EntityController
                         .age(20)
                         .build()
         );
+    }
+
+    @PostMapping
+    public ResponseEntity<EntityModel> createModel(@RequestBody EntityModel model)
+    {
+        log.info("Create model {}", model);
+        model.setId(ThreadLocalRandom.current().nextLong());
+        return ResponseEntity.status(HttpStatus.CREATED).body(model);
+    }
+    @PutMapping("/{id}")
+    public ResponseEntity<EntityModel> updateModel(@RequestBody EntityModel model, @PathVariable Long id)
+    {
+        log.info("Update model {} with id {}", model, id);
+        return ResponseEntity.ok(model);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteModel(@PathVariable Long id)
+    {
+        log.info("Delete model with id {}", id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/exception")
+    public ResponseEntity<Void> exceptionMethod()
+    {
+        throw new RuntimeException("Exception at runtime");
     }
 }
