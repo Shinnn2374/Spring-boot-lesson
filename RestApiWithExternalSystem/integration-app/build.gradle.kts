@@ -34,6 +34,8 @@ dependencies {
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 	implementation("com.squareup.okhttp3:okhttp:4.11.0")
 	implementation("org.springframework.boot:spring-boot-starter-webflux")
+	implementation("org.springframework.boot:spring-boot-starter-jpa")
+	runtimeOnly("org.postgresql:postgresql")
 }
 
 dependencyManagement {
