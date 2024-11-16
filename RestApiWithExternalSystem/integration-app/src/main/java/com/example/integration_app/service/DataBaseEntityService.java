@@ -3,6 +3,9 @@ package com.example.integration_app.service;
 import com.example.integration_app.entity.DataBaseEntity;
 import com.example.integration_app.repository.DataBaseEntityRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
@@ -16,6 +19,7 @@ public class DataBaseEntityService
 {
     private final DataBaseEntityRepository dataBaseEntityRepository;
 
+    @Cacheable("databaseEntities")
     public List<DataBaseEntity> findAll()
     {
         return dataBaseEntityRepository.findAll();
@@ -26,6 +30,7 @@ public class DataBaseEntityService
         return dataBaseEntityRepository.findById(id).orElseThrow();
     }
 
+    @Cacheable("databaseEntityByName")
     public DataBaseEntity findByName(String name)
     {
         DataBaseEntity probe = new DataBaseEntity();
@@ -37,6 +42,7 @@ public class DataBaseEntityService
         return dataBaseEntityRepository.findOne(exampleOfProbe).orElseThrow();
     }
 
+    @CacheEvict(value = "databaseEntities", allEntries = true)
     public DataBaseEntity create(DataBaseEntity entity)
     {
         DataBaseEntity forSave = new DataBaseEntity();
@@ -45,6 +51,10 @@ public class DataBaseEntityService
         return dataBaseEntityRepository.save(forSave);
     }
 
+    @Caching(evict = {
+            @CacheEvict(value = "databaseEntities",allEntries = true),
+            @CacheEvict(value = "databaseEntityByName", allEntries = true)
+    })
     public DataBaseEntity update(UUID id, DataBaseEntity entity)
     {
         DataBaseEntity forUpdate = findById(id);
@@ -53,6 +63,10 @@ public class DataBaseEntityService
         return dataBaseEntityRepository.save(forUpdate);
     }
 
+    @Caching(evict = {
+            @CacheEvict(value = "databaseEntities",allEntries = true),
+            @CacheEvict(value = "databaseEntityByName", allEntries = true)
+    })
     public void deleteById(UUID id)
     {
         dataBaseEntityRepository.deleteById(id);
