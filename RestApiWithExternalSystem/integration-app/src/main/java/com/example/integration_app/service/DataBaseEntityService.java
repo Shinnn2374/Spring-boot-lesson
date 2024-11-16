@@ -53,5 +53,8 @@ public class DataBaseEntityService
         return dataBaseEntityRepository.save(forUpdate);
     }
 
-    
+    public void deleteById(UUID id)
+    {
+        dataBaseEntityRepository.deleteById(id);
+    }
 }

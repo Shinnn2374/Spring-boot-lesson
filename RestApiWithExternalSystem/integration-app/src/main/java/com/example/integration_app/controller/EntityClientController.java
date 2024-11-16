@@ -3,8 +3,10 @@ package com.example.integration_app.controller;
 import com.example.integration_app.clients.OkhttpClientSender;
 import com.example.integration_app.clients.RestTemplateClient;
 import com.example.integration_app.clients.WebClientSender;
+import com.example.integration_app.entity.DataBaseEntity;
 import com.example.integration_app.model.EntityModel;
 import com.example.integration_app.model.UpsertEntityRequest;
+import com.example.integration_app.service.DataBaseEntityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,35 +21,41 @@ import java.util.UUID;
 public class EntityClientController
 {
     private final WebClientSender client;
+    private final DataBaseEntityService service;
 
     @GetMapping
     public ResponseEntity<List<EntityModel>> getEntityList()
     {
-        return ResponseEntity.ok(client.getEntityList());
+        return ResponseEntity.ok(service.findAll().stream().map(EntityModel::from).toList());
     }
 
     @GetMapping("/{name}")
     public ResponseEntity<EntityModel> getEntityByName(@PathVariable String name)
     {
-        return ResponseEntity.ok(client.getEntityByName(name));
+        return ResponseEntity.ok(EntityModel.from(service.findByName(name)));
     }
 
     @PostMapping
     public ResponseEntity<EntityModel> createEntity(@RequestBody UpsertEntityRequest request)
     {
-        return ResponseEntity.status(HttpStatus.CREATED).body(client.createEntity(request));
+        var newEntity = client.createEntity(request);
+        var saveEntity = service.create(DataBaseEntity.from(newEntity));
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(EntityModel.from(saveEntity));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<EntityModel> updateEntity(@PathVariable UUID id, @RequestBody UpsertEntityRequest request)
     {
-        return ResponseEntity.ok(client.updateEntity(id, request));
+        var updateEntity = client.updateEntity(id, request);
+        var updatedEntityDb = service.create(DataBaseEntity.from(updateEntity));
+        return ResponseEntity.ok(EntityModel.from(updatedEntityDb));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteEntityById(@PathVariable UUID id)
     {
-        client.deleteEntityById(id);
+        service.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 }

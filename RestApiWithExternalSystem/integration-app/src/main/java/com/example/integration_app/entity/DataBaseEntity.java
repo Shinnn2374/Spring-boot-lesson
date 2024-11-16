@@ -27,7 +27,7 @@ public class DataBaseEntity
     private Instant date;
 
 
-    public static DataBaseEntity fromEntityModel(EntityModel entityModel)
+    public static DataBaseEntity from(EntityModel entityModel)
     {
         return new DataBaseEntity(entityModel.getId(), entityModel.getName(), entityModel.getDate());
     }
