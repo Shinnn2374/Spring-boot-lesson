@@ -29,7 +29,7 @@ app:
     caches:
       databaseEntities:
         expire:
-          seconds: 10
+          seconds: 600
       databaseEntityByName:
         expire:
-          seconds: 10
+          seconds: 600

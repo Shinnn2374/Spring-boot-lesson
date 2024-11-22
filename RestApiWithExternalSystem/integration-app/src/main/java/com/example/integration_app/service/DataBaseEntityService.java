@@ -3,6 +3,7 @@ package com.example.integration_app.service;
 import com.example.integration_app.entity.DataBaseEntity;
 import com.example.integration_app.repository.DataBaseEntityRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
@@ -15,6 +16,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@CacheConfig(cacheManager = "redisCacheManager")
 public class DataBaseEntityService
 {
     private final DataBaseEntityRepository dataBaseEntityRepository;
