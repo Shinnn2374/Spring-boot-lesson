@@ -13,3 +13,16 @@ spring:
 app:
   integration:
     base-url: http://localhost:8082
+
+  cache:
+    cacheType: IN_MEMORY
+    cache-names:
+      - databaseEntities
+      - databaseEntityByName
+    caches:
+      databaseEntities:
+        expire:
+          seconds: 10
+      databaseEntityByName:
+        expire:
+          seconds: 10

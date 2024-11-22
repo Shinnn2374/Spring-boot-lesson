@@ -16,6 +16,7 @@ public class AppCacheProperties
 {
     private final List<String> cacheNames = new ArrayList<>();
     private final Map<String, CacheProperties> caches = new HashMap<>();
+    private CacheType cacheType;
 
     @Data
     public static class CacheProperties
