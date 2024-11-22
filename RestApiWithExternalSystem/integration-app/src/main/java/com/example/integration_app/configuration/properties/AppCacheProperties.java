@@ -1,7 +1,6 @@
 package com.example.integration_app.configuration.properties;
 
 import lombok.Data;
-import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.time.Duration;
