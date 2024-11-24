@@ -17,19 +17,17 @@ spring:
 
 app:
   redis:
-    enable: "true"
+    enable: true
   integration:
     base-url: http://localhost:8082
 
   cache:
-    cacheType: REDIS
+    cacheType: redis
     cache-names:
       - databaseEntities
       - databaseEntityByName
     caches:
       databaseEntities:
-        expire:
-          nanos: 60000000000
+        expire: 5s
       databaseEntityByName:
-        expire:
-          nanos: 60000000000
+        expire: 10s

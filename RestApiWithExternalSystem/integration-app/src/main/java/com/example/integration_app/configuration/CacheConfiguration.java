@@ -52,8 +52,8 @@ public class CacheConfiguration
     }
 
     @Bean
-    @ConditionalOnProperty(prefix = "app.redis",name = "enable", havingValue = "true")
-    @ConditionalOnExpression("'${app.cache.cacheType}'.equals('REDIS')")
+    @ConditionalOnProperty(prefix = "app.redis", name = "enable", havingValue = "true")
+    @ConditionalOnExpression("'${app.cache.cacheType}'.equals('redis')")
     public CacheManager redisCacheManager(AppCacheProperties appCacheProperties,
                                           LettuceConnectionFactory lettuceConnectionFactory)
     {
@@ -64,8 +64,7 @@ public class CacheConfiguration
                     redisCacheConfiguration.put(name, RedisCacheConfiguration.defaultCacheConfig().entryTtl(
                             appCacheProperties.getCaches().get(name).getExpire()
                     ));
-                }
-        );
+                });
         return RedisCacheManager.builder(lettuceConnectionFactory)
                 .cacheDefaults(defaultConfig)
                 .withInitialCacheConfigurations(redisCacheConfiguration)
