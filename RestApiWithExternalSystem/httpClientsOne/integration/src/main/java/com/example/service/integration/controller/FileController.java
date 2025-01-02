@@ -3,7 +3,10 @@ package com.example.service.integration.controller;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -31,7 +34,18 @@ public class FileController
     @GetMapping("/download/{filename}")
     public ResponseEntity<Resource> downloadFile(@PathVariable String filename)
     {
-
+        String filePath = "files/" + filename;
+        Resource fileResource = new ClassPathResource(filePath);
+        if(!fileResource.exists())
+        {
+            return ResponseEntity.notFound().build();
+        }
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + filename);
+        headers.setContentType(MediaType.TEXT_PLAIN);
+        return ResponseEntity.ok()
+                .headers(headers)
+                .body(fileResource);
     }
 }
 
