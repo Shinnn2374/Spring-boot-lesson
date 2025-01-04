@@ -33,7 +33,7 @@ public class FileController
     @GetMapping("/download/{filename}")
     public ResponseEntity<Resource> downloadFile(@PathVariable String filename)
     {
-        String filepath = "/files/" + filename;
+        String filepath = "files/" + filename;
         Resource resource = new ClassPathResource(filepath);
         if (!resource.exists())
         {
