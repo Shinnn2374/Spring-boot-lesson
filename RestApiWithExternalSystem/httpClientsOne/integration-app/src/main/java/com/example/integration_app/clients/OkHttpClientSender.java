@@ -91,9 +91,46 @@ public class OkHttpClientSender
         return processResponse(request, new TypeReference<>() {});
     }
 
+    @SneakyThrows
     public EntityModel createEntity(UpsertEntityRequest request)
     {
-        
+        MediaType JSON = MediaType.get("application/json; charset=utf-8");
+        String requestBody = objectMapper.writeValueAsString(request);
+        RequestBody body = RequestBody.create(requestBody, JSON);
+        Request httpRequest = new Request.Builder()
+                .url(baseUrl + "/api/v1/entity")
+                .post(body)
+                .build();
+        return processResponse(httpRequest, new TypeReference<>() {});
+    }
+
+    @SneakyThrows
+    public EntityModel updateEntity(UUID id,UpsertEntityRequest request)
+    {
+        MediaType JSON = MediaType.get("application/json; charset=utf-8");
+        String requestBody = objectMapper.writeValueAsString(request);
+        RequestBody body = RequestBody.create(requestBody, JSON);
+        Request httpRequest = new Request.Builder()
+                .url(baseUrl + "/api/v1/entity/" + id)
+                .put(body)
+                .build();
+        return processResponse(httpRequest, new TypeReference<>() {});
+    }
+
+    @SneakyThrows
+    public void deleteEntityById(UUID id)
+    {
+        Request request = new Request.Builder()
+                .url(baseUrl + "api/v1/entity/" + id)
+                .delete()
+                .build();
+        try(Response response = client.newCall(request).execute())
+        {
+            if (!response.isSuccessful())
+            {
+                throw new RuntimeException("Unxepcted response code : " + response);
+            }
+        }
     }
 
     @SneakyThrows
