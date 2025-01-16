@@ -3,11 +3,14 @@ package com.example.service.integration.controller;
 import com.example.service.integration.model.EntityModel;
 import com.example.service.integration.model.UpsertEntityRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/entity")
@@ -34,6 +37,19 @@ public class EntityController
     @PostMapping
     public ResponseEntity<EntityModel> createModel(@RequestBody UpsertEntityRequest request)
     {
-        
+        return ResponseEntity.status(HttpStatus.CREATED).body(EntityModel.createMockModel(request.getName()));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<EntityModel> updateEntity(@PathVariable UUID id, @RequestBody UpsertEntityRequest request)
+    {
+        return ResponseEntity.ok(new EntityModel(id,request.getName(), Instant.now()));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteEntityById(@PathVariable UUID id)
+    {
+        log.info("Deleting entity with id {}", id);
+        return ResponseEntity.noContent().build();
     }
 }
