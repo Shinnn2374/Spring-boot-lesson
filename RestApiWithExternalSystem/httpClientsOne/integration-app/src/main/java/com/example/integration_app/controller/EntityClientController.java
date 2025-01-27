@@ -1,7 +1,9 @@
 package com.example.integration_app.controller;
 
 import com.example.integration_app.clients.OkHttpClientSender;
+import com.example.integration_app.clients.OpenFeignClient;
 import com.example.integration_app.clients.RestTemplateClient;
+import com.example.integration_app.clients.WebClientSender;
 import com.example.integration_app.model.EntityModel;
 import com.example.integration_app.model.UpsertEntityRequest;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +19,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class EntityClientController
 {
-    private final RestTemplateClient client;
+    private final OpenFeignClient client;
 
     @GetMapping
     public ResponseEntity<List<EntityModel>> getEntityList()

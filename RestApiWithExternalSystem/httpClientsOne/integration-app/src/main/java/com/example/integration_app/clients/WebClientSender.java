@@ -1,6 +1,7 @@
 package com.example.integration_app.clients;
 
 import com.example.integration_app.model.EntityModel;
+import com.example.integration_app.model.UpsertEntityRequest;
 import lombok.RequiredArgsConstructor;
 import okhttp3.MultipartBody;
 import org.springframework.core.io.Resource;
@@ -14,6 +15,7 @@ import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.List;
+import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
@@ -49,7 +51,7 @@ public class WebClientSender
     public List<EntityModel> getEntityList()
     {
         return webClient.get()
-                .uri("/api/v1/client//entity")
+                .uri("/api/v1/client/entity")
                 .retrieve()
                 .bodyToFlux(EntityModel.class)
                 .collectList()
@@ -64,5 +66,32 @@ public class WebClientSender
                 .block();
     }
 
-    public EntityModel
+    public EntityModel createEntity(UpsertEntityRequest request)
+    {
+        return webClient.post()
+                .uri("/api/v1/entity")
+                .bodyValue(request)
+                .retrieve()
+                .bodyToMono(EntityModel.class)
+                .block();
+    }
+
+    public EntityModel updateEntity(UUID id, UpsertEntityRequest request)
+    {
+        return webClient.put()
+                .uri("/api/v1/entity/{id}",id)
+                .bodyValue(request)
+                .retrieve()
+                .bodyToMono(EntityModel.class)
+                .block();
+    }
+
+    public void deleteEntityById(UUID id)
+    {
+        webClient.delete()
+                .uri("/api/v1/entity/{id}",id)
+                .retrieve()
+                .bodyToMono(Void.class)
+                .block();
+    }
 }
