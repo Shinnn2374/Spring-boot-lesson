@@ -25,7 +25,7 @@ import java.util.UUID;
 public class OkHttpClientSender
 {
     private final OkHttpClient client;
-    private ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper;
 
     @Value("${app.integration.base-url}")
     private String baseUrl;
@@ -35,7 +35,7 @@ public class OkHttpClientSender
     {
         MultipartBody.Builder builder = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
-                .addFormDataPart("file",file.getName(),
+                .addFormDataPart("file",file.getOriginalFilename(),
                         RequestBody.create(MediaType.parse("application/octet-stream"),file.getBytes()));
         Request request = new Request.Builder()
                 .url(baseUrl+"/api/v1/file/upload")

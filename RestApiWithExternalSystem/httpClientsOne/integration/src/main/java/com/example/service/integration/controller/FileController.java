@@ -37,7 +37,7 @@ public class FileController
     {
         String filePath = "files/" + filename;
         Resource resource = new ClassPathResource(filePath);
-        if (resource.exists())
+        if (!resource.exists())
         {
             return ResponseEntity.notFound().build();
         }
