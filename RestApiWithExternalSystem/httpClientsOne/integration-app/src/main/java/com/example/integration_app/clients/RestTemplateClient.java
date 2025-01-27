@@ -55,7 +55,7 @@ public class RestTemplateClient
                 baseUrl+"/api/v1/entity",
                 HttpMethod.GET,
                 null,
-                new ParameterizedTypeReference<>(){},
+                new ParameterizedTypeReference<>(){}
         );
         return response.getBody();
     }
@@ -96,5 +96,14 @@ public class RestTemplateClient
         return response.getBody();
     }
 
-    public 
+    public void deleteEntityById(UUID id)
+    {
+        restTemplate.exchange(
+                baseUrl+"/api/v1/entity/{id}",
+                HttpMethod.DELETE,
+                null,
+                Void.class,
+                id
+        );
+    }
 }
