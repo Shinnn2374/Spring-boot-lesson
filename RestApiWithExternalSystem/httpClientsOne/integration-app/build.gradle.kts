@@ -32,6 +32,9 @@ dependencies {
 	implementation("com.squareup.okhttp3:okhttp:4.11.0")
 	implementation("org.springframework.boot:spring-boot-starter-webflux")
 
+	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+	implementation("org.postgresql:postgresql")
+
 	compileOnly("org.projectlombok:lombok")
 	annotationProcessor("org.projectlombok:lombok")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
