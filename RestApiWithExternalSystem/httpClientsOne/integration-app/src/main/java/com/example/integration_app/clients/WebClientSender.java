@@ -3,14 +3,12 @@ package com.example.integration_app.clients;
 import com.example.integration_app.model.EntityModel;
 import com.example.integration_app.model.UpsertEntityRequest;
 import lombok.RequiredArgsConstructor;
-import okhttp3.MultipartBody;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.client.MultipartBodyBuilder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.reactive.function.BodyInserter;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 
