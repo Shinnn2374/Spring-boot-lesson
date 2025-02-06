@@ -22,7 +22,7 @@ import java.util.UUID;
 public class EntityClientController
 {
     private final OpenFeignClient client;
-    private final DataBaseEntityService service
+    private final DataBaseEntityService service;
 
     @GetMapping
     public ResponseEntity<List<EntityModel>> getEntityList()
@@ -52,14 +52,14 @@ public class EntityClientController
     public ResponseEntity<EntityModel> updateEntity(@PathVariable UUID id, @RequestBody UpsertEntityRequest request)
     {
         var updateEntity = client.updateEntity(id, request);
-        var saveEntity= service.create(DataBaseEntity.from(updateEntity));
+        var saveEntity= service.update(id, DataBaseEntity.from(updateEntity));
         return ResponseEntity.ok(EntityModel.from(saveEntity));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteEntityById(@PathVariable UUID id)
     {
-        client.deleteEntityById(id);
+        service.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 }
