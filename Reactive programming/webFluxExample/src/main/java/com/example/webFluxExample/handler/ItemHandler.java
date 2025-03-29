@@ -46,7 +46,13 @@ public class ItemHandler {
 
     public Mono<ServerResponse> errorRequest(ServerRequest request) {
         return ServerResponse.ok().contentType(MediaType.APPLICATION_JSON)
-                .body(Mono.error(new RuntimeException("Exception in error Request")), ItemModel.class);
+                .body(Mono.error(new RuntimeException("Exception in error Request")), String.class)
+                .onErrorResume(ex -> {
+                    log.error("Error in error Request", ex);
+                    return ServerResponse.badRequest().body(Mono.error(ex), String.class);
+                });
     }
+
+
 
 }
