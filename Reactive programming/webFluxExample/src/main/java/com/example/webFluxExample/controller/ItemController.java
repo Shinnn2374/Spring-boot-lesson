@@ -1,13 +1,11 @@
 package com.example.webFluxExample.controller;
 
+import com.example.webFluxExample.entity.Item;
 import com.example.webFluxExample.model.ItemModel;
 import com.example.webFluxExample.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -24,7 +22,38 @@ public class ItemController {
 
     @GetMapping("/{id}")
     public Mono<ResponseEntity<ItemModel>> getItemById(@PathVariable String id) {
-        return itemService.findById(id).map(item -> ResponseEntity.ok(ItemModel.from(item)));
+        return itemService.findById(id)
+                .map(ItemModel::from)
+                .map(ResponseEntity::ok)
+                .defaultIfEmpty(ResponseEntity.notFound().build());
     }
-    
+
+    @GetMapping("/{name}")
+    public Mono<ResponseEntity<ItemModel>> getItemByName(@RequestParam String name) {
+        return itemService.findByName(name)
+                .map(ItemModel::from)
+                .map(ResponseEntity::ok)
+                .defaultIfEmpty(ResponseEntity.notFound().build());
+    }
+
+    @PostMapping
+    public Mono<ResponseEntity<ItemModel>> createItem(@RequestBody ItemModel itemModel) {
+        return itemService.save(Item.from(itemModel))
+                .map(ItemModel::from)
+                .map(ResponseEntity::ok);
+    }
+
+    @PutMapping("/{id}")
+    public Mono<ResponseEntity<ItemModel>> updateItem(@PathVariable String id, @RequestBody ItemModel itemModel) {
+        return itemService.update(id, Item.from(itemModel))
+                .map(ItemModel::from)
+                .map(ResponseEntity::ok)
+                .defaultIfEmpty(ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping("/{id}")
+    public Mono<ResponseEntity<Void>> deleteItem(@PathVariable String id) {
+        return itemService.deleteById(id).then(Mono.just(ResponseEntity.noContent().build()));
+    }
+
 }
