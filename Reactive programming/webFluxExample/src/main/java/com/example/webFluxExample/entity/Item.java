@@ -27,6 +27,7 @@ public class Item {
         var item = new Item();
         item.setId(model.getId());
         item.setName(model.getName());
+        item.setCount(model.getCount());
         if (model.getSubItems()!= null) {
             item.setSubItems(model.getSubItems().stream()
                     .map(SubItem::from).collect(Collectors.toList()));

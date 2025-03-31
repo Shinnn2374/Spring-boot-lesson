@@ -2,6 +2,7 @@ package com.example.webFluxExample.controller;
 
 import com.example.webFluxExample.entity.Item;
 import com.example.webFluxExample.model.ItemModel;
+import com.example.webFluxExample.publisher.ItemUpdatesPublisher;
 import com.example.webFluxExample.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,8 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class ItemController {
     private final ItemService itemService;
+
+    private final ItemUpdatesPublisher publisher;
 
     @GetMapping
     public Flux<ItemModel> getAllItems() {
@@ -40,6 +43,7 @@ public class ItemController {
     public Mono<ResponseEntity<ItemModel>> createItem(@RequestBody ItemModel itemModel) {
         return itemService.save(Item.from(itemModel))
                 .map(ItemModel::from)
+                .doOnSuccess(publisher::publish)
                 .map(ResponseEntity::ok);
     }
 
@@ -55,5 +59,4 @@ public class ItemController {
     public Mono<ResponseEntity<Void>> deleteItem(@PathVariable String id) {
         return itemService.deleteById(id).then(Mono.just(ResponseEntity.noContent().build()));
     }
-
 }
