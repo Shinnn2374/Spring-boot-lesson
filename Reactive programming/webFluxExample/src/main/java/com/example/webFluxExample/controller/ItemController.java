@@ -5,7 +5,9 @@ import com.example.webFluxExample.model.ItemModel;
 import com.example.webFluxExample.publisher.ItemUpdatesPublisher;
 import com.example.webFluxExample.service.ItemService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.codec.ServerSentEvent;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -58,5 +60,12 @@ public class ItemController {
     @DeleteMapping("/{id}")
     public Mono<ResponseEntity<Void>> deleteItem(@PathVariable String id) {
         return itemService.deleteById(id).then(Mono.just(ResponseEntity.noContent().build()));
+    }
+
+    @GetMapping(value = "/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public Flux<ServerSentEvent<ItemModel>> getItemStream() {
+        return publisher.getUpdatesSink()
+                .asFlux()
+                .map(item -> ServerSentEvent.builder(item).build());
     }
 }
