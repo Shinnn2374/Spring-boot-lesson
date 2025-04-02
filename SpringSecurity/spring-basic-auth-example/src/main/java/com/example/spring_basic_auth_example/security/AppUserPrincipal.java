@@ -42,7 +42,7 @@ public class AppUserPrincipal implements UserDetails {
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return true);
+        return true;
     }
 
     @Override
