@@ -23,7 +23,7 @@ public class PublicController {
     }
 
     @PostMapping("/account")
-    public ResponseEntity<UserDto> createAccount(@RequestBody UserDto userDto, @RequestParam RoleType roleType) {
+    public ResponseEntity<UserDto> createUserAccount(@RequestBody UserDto userDto, @RequestParam RoleType roleType) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(createAccount(userDto,roleType));
     }
@@ -34,7 +34,10 @@ public class PublicController {
         user.setUsername(userDto.getUsername());
 
         var createUser = userService.createNewAccount(user, Role.from(roleType));
-        
-    }
 
+        return UserDto.builder()
+                .username(createUser.getUsername())
+                .password(createUser.getPassword())
+                .build();
+    }
 }
