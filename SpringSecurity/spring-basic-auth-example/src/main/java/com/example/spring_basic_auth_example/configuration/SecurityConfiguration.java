@@ -1,8 +1,10 @@
 package com.example.spring_basic_auth_example.configuration;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -26,6 +28,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableMethodSecurity
 @RequiredArgsConstructor
 public class SecurityConfiguration {
+
     @Bean
     @ConditionalOnProperty(prefix = "app.security", name = "type", havingValue = "inMemory")
     public PasswordEncoder inMemmoryPasswordEncoder() {
@@ -40,8 +43,9 @@ public class SecurityConfiguration {
 
     @Bean
     @ConditionalOnProperty(prefix = "app.security", name = "type", havingValue = "db")
-    public AuthenticationManager dbAuthenticationManager(HttpSecurity http,UserDetailsService userDetailsService
-            ,PasswordEncoder passwordEncoder) throws Exception {
+    public AuthenticationManager dbAuthenticationManager(HttpSecurity http,
+                                                         UserDetailsService userDetailsService,
+                                                         PasswordEncoder passwordEncoder) throws Exception {
         var authManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
         authManagerBuilder.userDetailsService(userDetailsService);
         var authProvider = new DaoAuthenticationProvider(passwordEncoder);
