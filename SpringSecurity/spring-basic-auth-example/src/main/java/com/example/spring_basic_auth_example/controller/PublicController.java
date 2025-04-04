@@ -30,7 +30,7 @@ public class PublicController {
 
     public UserDto createAccount(UserDto userDto, RoleType roleType){
         var user = new User();
-        user.setUsername(userDto.getUsername());
+        user.setPassword(userDto.getPassword());
         user.setUsername(userDto.getUsername());
 
         var createUser = userService.createNewAccount(user, Role.from(roleType));

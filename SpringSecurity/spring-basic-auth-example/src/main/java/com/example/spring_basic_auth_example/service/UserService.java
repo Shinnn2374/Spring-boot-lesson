@@ -19,6 +19,7 @@ public class UserService {
     public User createNewAccount(User user, Role role) {
         user.setRoles(Collections.singletonList(role));
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        role.setUser(user);
         return userRepository.save(user);
     }
 
