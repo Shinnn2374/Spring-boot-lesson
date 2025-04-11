@@ -38,6 +38,7 @@ public class JwtUtils {
                 .getBody()
                 .getSubject();
     }
+    
 
     public boolean validate(String authToken) {
         try {
