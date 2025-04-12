@@ -1,5 +1,6 @@
 package com.example.springJWTAuthExample.web.model;
 
+import com.example.springJWTAuthExample.entite.RoleType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,6 +16,6 @@ public class CreateUserRequest {
 
     private String username;
     private String email;
-    private Set<String> roles;
+    private Set<RoleType> roles;
     private String password;
 }
