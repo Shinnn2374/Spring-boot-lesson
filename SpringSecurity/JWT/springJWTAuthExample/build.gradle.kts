@@ -31,7 +31,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("redis.clients:jedis")
 	implementation("io.jsonwebtoken:jjwt:0.9.1")
-	implementation("javax.xml.bind.jaxb-api:2.3.1")
+	implementation("javax.xml.bind:jaxb-api:2.3.1")
 
 	compileOnly("org.projectlombok:lombok")
 
