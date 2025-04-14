@@ -32,7 +32,7 @@ public class TokenProvider {
         if (!getFromCache || cachedToken == null) {
             log.info("Retrieve token and cache");
             cachedToken = retrieveToken()
-                    .cache(Duration.ofMillis(10))
+                    .cache(Duration.ofMinutes(10))
                     .doOnError(throwable -> cachedToken = null);
         }
         return cachedToken;
