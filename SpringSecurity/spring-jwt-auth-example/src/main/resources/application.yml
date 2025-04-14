@@ -1,2 +1,6 @@
 server:
   port: 8082
+
+app:
+  clientId: testUser
+  clientSecret: 12345
