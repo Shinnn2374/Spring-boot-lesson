@@ -1,12 +1,9 @@
 package com.example.spring_jwt_auth_example.controller;
 
-import com.example.spring_jwt_auth_example.client.BasicAuthClient;
+import com.example.spring_jwt_auth_example.client.JwtAuthClient;
 import com.example.spring_jwt_auth_example.web.model.AuthRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
 @RestController
@@ -14,10 +11,12 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class AppController {
 
-    private final BasicAuthClient basicAuthClient;
+    private final JwtAuthClient jwtAuthClient;
 
-    @PostMapping
+//    @PostMapping
+    @GetMapping
     public Mono<String> authRequest(@RequestBody AuthRequest authRequest) {
-        return basicAuthClient.getData(authRequest);
+        return jwtAuthClient.getData();
+//        return basicAuthClient.getData(authRequest);
     }
 }
