@@ -4,6 +4,8 @@ import ch.qos.logback.classic.spi.LoggingEventVO;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.ReactiveAuthenticationManager;
+import org.springframework.security.authentication.UserDetailsRepositoryReactiveAuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
@@ -30,6 +32,24 @@ public class SecurityConfiguration {
     @ConditionalOnProperty(prefix = "app.security", name = "type", havingValue = "inMemory")
     public SecurityWebFilterChain inMemoryFilterChain(ServerHttpSecurity http) {
         return buildDefaultHttpSecurity(http).build();
+    }
+
+    @Bean
+    @ConditionalOnProperty(prefix = "app.security", name = "type", havingValue = "db")
+    public ReactiveAuthenticationManager authenticationManager(ReactiveUserDetailsService userDetailsService,
+                                                               PasswordEncoder passwordEncoder) {
+        var reactiveAuthenticationManager = new UserDetailsRepositoryReactiveAuthenticationManager(userDetailsService);
+
+        reactiveAuthenticationManager.setPasswordEncoder(passwordEncoder);
+        return reactiveAuthenticationManager;
+    }
+
+    @Bean
+    @ConditionalOnProperty(prefix = "app.security", name = "type", havingValue = "db")
+    public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http, ReactiveAuthenticationManager authenticationManager) {
+        return buildDefaultHttpSecurity(http)
+                .authenticationManager(authenticationManager)
+                .build();
     }
 
     @Bean
