@@ -46,8 +46,8 @@ public class SecurityConfiguration {
     @ConditionalOnProperty(prefix = "app.security", name = "type", havingValue = "inMemory")
     public AuthenticationManager inMemoryAuthenticationManager(HttpSecurity http,
                                                                UserDetailsService inMemoryUserDetailsService) throws Exception {
-        var authManagerBuilder = http.getSharedObjects(AuthenticationManagerBuilder.class);
-        authManagerBuilder.userDetailService(inMemoryUserDetailsService);
+        var authManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
+        authManagerBuilder.userDetailsService(inMemoryUserDetailsService);
         return authManagerBuilder.build();
     }
 }
