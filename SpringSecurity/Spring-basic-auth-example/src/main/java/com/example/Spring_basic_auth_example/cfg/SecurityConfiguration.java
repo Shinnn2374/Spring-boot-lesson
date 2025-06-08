@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -14,6 +15,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
@@ -29,6 +31,12 @@ public class SecurityConfiguration {
     @ConditionalOnProperty(prefix = "app.security", name = "type", havingValue = "inMemory")
     public PasswordEncoder inMemoryPasswordEncoder() {
         return NoOpPasswordEncoder.getInstance();
+    }
+
+    @Bean
+    @ConditionalOnProperty(prefix = "app.security", name = "type", havingValue = "db")
+    public PasswordEncoder dbPasswordEncoder() {
+        return new BCryptPasswordEncoder(12);
     }
 
     @Bean
@@ -52,6 +60,19 @@ public class SecurityConfiguration {
                                                                UserDetailsService inMemoryUserDetailsService) throws Exception {
         var authManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
         authManagerBuilder.userDetailsService(inMemoryUserDetailsService);
+        return authManagerBuilder.build();
+    }
+
+
+    @Bean
+    @ConditionalOnProperty(prefix = "app.security", name = "type", havingValue = "db")
+    public AuthenticationManager dbAuthenticationManager(HttpSecurity http, UserDetailsService dbUserDetailsService,
+                                                         PasswordEncoder passwordEncoder) throws Exception {
+        var authManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
+        authManagerBuilder.userDetailsService(dbUserDetailsService);
+        var authProvider = new DaoAuthenticationProvider(passwordEncoder);
+        authProvider.setUserDetailsService(dbUserDetailsService);
+        authManagerBuilder.authenticationProvider(authProvider);
         return authManagerBuilder.build();
     }
 

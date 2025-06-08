@@ -1,12 +1,13 @@
 package com.example.Spring_basic_auth_example.security;
 
+import com.example.Spring_basic_auth_example.entity.Role;
+import com.example.Spring_basic_auth_example.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 public class AppUserPrincipal implements UserDetails {
@@ -15,7 +16,7 @@ public class AppUserPrincipal implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        return user.getRoles().stream().map(Role::toAuthority).collect(Collectors.toList());
     }
 
     @Override
