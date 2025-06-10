@@ -40,6 +40,7 @@ public class JwtUtils {
     public Boolean validate(String authToken) {
         try {
             Jwts.parser().setSigningKey(secret).parseClaimsJws(authToken);
+            return true;
         }catch (SignatureException e){
             log.error("Invalid signature: {}", e.getMessage());
         }catch (MalformedJwtException e){
@@ -51,5 +52,6 @@ public class JwtUtils {
         }catch (IllegalArgumentException e){
             log.error("Token is empty: {}", e.getMessage());
         }
+        return false;
     }
 }
