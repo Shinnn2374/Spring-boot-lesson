@@ -62,6 +62,6 @@ public class SecurityService {
                 .build();
         user.setRoles(request.getRoles());
 
-        
+
     }
 }
