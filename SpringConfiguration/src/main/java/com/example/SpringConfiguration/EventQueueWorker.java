@@ -1,6 +1,8 @@
 package com.example.SpringConfiguration;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 
 import java.util.UUID;
 
@@ -9,6 +11,7 @@ public class EventQueueWorker {
 
     private final EventQueue eventQueue;
 
+    @EventListener(ApplicationReadyEvent.class)
     public void startEventQueue() {
         startEventProducer();
         startEventConsumer();
