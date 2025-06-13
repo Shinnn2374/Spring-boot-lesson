@@ -1,11 +1,13 @@
 package com.example.SpringConfiguration;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 @Component
+@ConditionalOnProperty("app.event-queue.enabled")
 public class EventQueue {
 
     private final BlockingQueue<Event> queue = new LinkedBlockingQueue<>();

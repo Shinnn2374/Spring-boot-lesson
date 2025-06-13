@@ -1,0 +1,3 @@
+app:
+  event-queue:
+    enabled: true
