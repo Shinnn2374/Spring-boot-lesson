@@ -44,6 +44,26 @@ public class TaskController {
         return "redirect:/";
     }
 
+    @PostMapping("/task/edit")
+    public String editTask(@ModelAttribute Task task) {
+        Task existTask = findTaskById(task.getId());
+        if (existTask != null) {
+            existTask.setTitle(task.getTitle());
+            existTask.setDescription(task.getDescription());
+            existTask.setPriority(task.getPriority());
+        }
+        return "redirect:/";
+    }
+
+    @GetMapping("/task/delete/{id}")
+    public String deleteTask(@PathVariable("id") long id, Model model) {
+        Task task = findTaskById(id);
+        if (task != null) {
+            tasks.remove(task);
+        }
+        return "redirect:/";
+    }
+
     private Task findTaskById(long id) {
         return tasks.stream().filter(task -> task.getId() == id).findFirst().orElse(null);
     }

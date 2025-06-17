@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th ="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Task</title>
+</head>
+<body>
+<h1>Edit Task</h1>
+<form action="/task/edit" method="post">
+    <input type="hidden" name="id" th:value="${task.id}">
+    <div>
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" required th:value="${task.title}">
+    </div>
+    <div>
+        <label for="description">Title:</label>
+        <input type="text" id="description" name="description" required th:value="${task.description}">
+    </div>
+    <div>
+        <label for="priority">Title:</label>
+        <input type="number" id="priority" name="priority" required th:value="${task.priority}">
+    </div>
+    <button type="submit">Save</button>
+
+</form>
+</body>
+</html>
