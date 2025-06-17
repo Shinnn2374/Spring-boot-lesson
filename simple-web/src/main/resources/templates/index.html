@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th ="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Task Management</title>
+</head>
+<body>
+    <h1>Task management</h1>
+        <table>
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Priority</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="task : ${tasks}">
+                <td th:text="${task.id}"></td>
+                <td th:text="${task.title}"></td>
+                <td th:text="${task.description}"></td>
+                <td th:text="${task.priority}"></td>
+                <td>
+                    <a th:href="@{/task/edit/{id}(id = ${task.id})}">Edit</a>
+                    <a th:href="@{/task/delete/{id}(id = ${task.id})}">Delete</a>
+                </td>
+
+            </tr>
+            </tbody>
+        </table>
+    <a href="/task/create">Create task</a>
+
+</body>
+</html>
