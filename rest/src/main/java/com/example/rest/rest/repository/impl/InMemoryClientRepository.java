@@ -1,9 +1,11 @@
 package com.example.rest.rest.repository.impl;
 
+import com.example.rest.rest.exceptions.EntityNotFoundException;
 import com.example.rest.rest.model.Client;
 import com.example.rest.rest.model.Order;
 import com.example.rest.rest.repository.ClientRepository;
 import com.example.rest.rest.repository.OrderRepository;
+import com.example.rest.rest.utils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -47,7 +49,7 @@ public class InMemoryClientRepository implements ClientRepository {
         if (updatedClient == null) {
             throw new EntityNotFoundException(MessageFormat.format("Client with id {0} not found", id));
         }
-        BeanUtils.copyNotNullProperties(client, updatedClient);
+        BeanUtils.copyNonNullProperties(client, updatedClient);
         updatedClient.setId(id);
         repository.put(id, updatedClient);
         return updatedClient;
