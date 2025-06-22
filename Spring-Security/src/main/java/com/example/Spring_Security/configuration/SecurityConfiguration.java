@@ -1,4 +1,4 @@
-package com.example.Spring_Security;
+package com.example.Spring_Security.configuration;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
