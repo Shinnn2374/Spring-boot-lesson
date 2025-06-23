@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -83,8 +84,17 @@ public class SecurityConfiguration {
 
     @Bean
     @ConditionalOnProperty(prefix = "app.security", name = "type", havingValue = "db")
-    public AuthenticationManager dbAuthenticationManager(HttpSecurity http, UserDe) {
-        H
+    public AuthenticationManager dbAuthenticationManager(HttpSecurity http,
+                                                         UserDetailsService userDetailsService,
+                                                         PasswordEncoder passwordEncoder) throws Exception {
+        var authManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
+        authManagerBuilder.userDetailsService(userDetailsService);
+
+        var authProvider = new DaoAuthenticationProvider(passwordEncoder);
+        authProvider.setUserDetailsService(userDetailsService);
+
+        authManagerBuilder.authenticationProvider(authProvider);
+        return authManagerBuilder.build();
     }
 
 }
