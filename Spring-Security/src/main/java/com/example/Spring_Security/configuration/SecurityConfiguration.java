@@ -14,6 +14,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
@@ -73,5 +74,17 @@ public class SecurityConfiguration {
         return http.build();
     }
 
+
+    @Bean
+    @ConditionalOnProperty(prefix = "app.security", name = "type", havingValue = "db")
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder(12);
+    }
+
+    @Bean
+    @ConditionalOnProperty(prefix = "app.security", name = "type", havingValue = "db")
+    public AuthenticationManager dbAuthenticationManager(HttpSecurity http, UserDe) {
+        H
+    }
 
 }
