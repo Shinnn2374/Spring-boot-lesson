@@ -29,7 +29,7 @@ public class Role {
         return new SimpleGrantedAuthority(authority.name());
     }
 
-    public static void Role role(RoleType roleType){
+    public static Role role(RoleType roleType){
         var role = new Role();
         role.setAuthority(roleType);
 
