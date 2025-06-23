@@ -40,7 +40,7 @@ public class SecurityConfiguration {
                 .roles("USER")
                 .build());
 
-        manager.createUser(User.withUsername("user")
+        manager.createUser(User.withUsername("admin")
                 .password("admin")
                 .roles("ADMIN")
                 .build());
