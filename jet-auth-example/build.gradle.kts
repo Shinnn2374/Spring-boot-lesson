@@ -29,9 +29,19 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
 	implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("org.springframework.boot:spring-boot-starter-web")
+	implementation("redis.clients:jedis:0.9.1")
+	implementation("io.jsonwebtoken:jjwt:0.9.1")
+	implementation("javax.xml..bind:jaxb-api:2.3.1")
+
+
+
 	compileOnly("org.projectlombok:lombok")
 	runtimeOnly("org.postgresql:postgresql")
+
+
 	annotationProcessor("org.projectlombok:lombok")
+
+
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.security:spring-security-test")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
