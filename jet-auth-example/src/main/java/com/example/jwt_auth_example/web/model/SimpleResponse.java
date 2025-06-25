@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class SimpleRequest{
+public class SimpleResponse {
 
     private String message;
 }
